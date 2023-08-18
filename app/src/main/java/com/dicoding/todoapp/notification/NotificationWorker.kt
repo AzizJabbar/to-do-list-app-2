@@ -14,7 +14,7 @@ import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
 import com.dicoding.todoapp.data.TaskRepository
 import com.dicoding.todoapp.ui.detail.DetailTaskActivity
-import com.dicoding.todoapp.utils.DateConverter
+import com.dicoding.todoapp.utils.TimeConverter
 import com.dicoding.todoapp.utils.NOTIFICATION_CHANNEL_ID
 import com.dicoding.todoapp.utils.TASK_ID
 
@@ -34,14 +34,14 @@ class NotificationWorker(ctx: Context, params: WorkerParameters) : Worker(ctx, p
 
     override fun doWork(): Result {
         // 14 : If notification preference on, get nearest active task from repository and show notification with pending intent
-        val nearestTask = TaskRepository.getInstance(applicationContext).getNearestActiveTask()
+        val nearestStartTask = TaskRepository.getInstance(applicationContext).getNearestStartTask()
         val mNotificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val mBuilder = channelName?.let {
             NotificationCompat.Builder(applicationContext, it)
-                .setContentIntent(getPendingIntent(nearestTask))
+                .setContentIntent(getPendingIntent(nearestStartTask))
                 .setSmallIcon(R.drawable.ic_notifications)
-                .setContentTitle(nearestTask.title)
-                .setContentText(applicationContext.getString(R.string.notify_content, DateConverter.convertMillisToString(nearestTask.dueDateMillis)))
+                .setContentTitle(nearestStartTask.title)
+                .setContentText(applicationContext.getString(R.string.notify_content, TimeConverter.convertMillisToString(nearestStartTask.startTimeMillis)))
                 .setAutoCancel(true)
         }
 

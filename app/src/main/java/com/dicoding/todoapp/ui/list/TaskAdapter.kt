@@ -6,15 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
-import com.dicoding.todoapp.databinding.TaskItemBinding
 import com.dicoding.todoapp.ui.detail.DetailTaskActivity
-import com.dicoding.todoapp.utils.DateConverter
+import com.dicoding.todoapp.utils.TimeConverter
 import com.dicoding.todoapp.utils.TASK_ID
 
 class TaskAdapter(
@@ -40,7 +38,7 @@ class TaskAdapter(
                 holder.cbComplete.isChecked = true
                 holder.tvTitle.state = 1
             }
-            task.dueDateMillis < System.currentTimeMillis() -> {
+            task.startTimeMillis < System.currentTimeMillis() -> {
                 //OVERDUE
                 holder.cbComplete.isChecked = false
                 holder.tvTitle.state = 2
@@ -56,14 +54,14 @@ class TaskAdapter(
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitle: TaskTitleView = itemView.findViewById(R.id.item_tv_title)
         val cbComplete: CheckBox = itemView.findViewById(R.id.item_checkbox)
-        private val tvDueDate: TextView = itemView.findViewById(R.id.item_tv_date)
+        private val tvTime: TextView = itemView.findViewById(R.id.item_tv_time)
 
         lateinit var getTask: Task
 
         fun bind(task: Task) {
             getTask = task
             tvTitle.text = task.title
-            tvDueDate.text = DateConverter.convertMillisToString(task.dueDateMillis)
+            tvTime.text = TimeConverter.convertMillisToString(task.startTimeMillis) + " - " + TimeConverter.convertMillisToString(task.endTimeMillis)
             itemView.setOnClickListener {
                 val detailIntent = Intent(itemView.context, DetailTaskActivity::class.java)
                 detailIntent.putExtra(TASK_ID, task.id)

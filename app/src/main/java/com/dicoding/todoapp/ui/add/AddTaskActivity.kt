@@ -13,14 +13,14 @@ import com.dicoding.todoapp.R
 import com.dicoding.todoapp.data.Task
 import com.dicoding.todoapp.ui.ViewModelFactory
 import com.dicoding.todoapp.ui.list.TaskActivity
-import com.dicoding.todoapp.utils.DateConverter
+import com.dicoding.todoapp.utils.TimeConverter
 import com.dicoding.todoapp.utils.DatePickerFragment
+import com.dicoding.todoapp.utils.TimePickerFragment
 import com.google.android.material.textview.MaterialTextView
-import java.text.SimpleDateFormat
 import java.util.*
 
-class AddTaskActivity : AppCompatActivity(), DatePickerFragment.DialogDateListener {
-    private var dueDateMillis: Long = System.currentTimeMillis()
+class AddTaskActivity : AppCompatActivity(), TimePickerFragment.DialogTimeListener {
+//    private var dueDateMillis: Long = System.currentTimeMillis()
     private lateinit var addTaskViewModel: AddTaskViewModel
 
 
@@ -49,7 +49,8 @@ class AddTaskActivity : AppCompatActivity(), DatePickerFragment.DialogDateListen
                         0,
                         findViewById<EditText>(R.id.add_ed_title).text.toString(),
                         findViewById<EditText>(R.id.add_ed_description).text.toString(),
-                        DateConverter.convertStringToMillis(findViewById<MaterialTextView>(R.id.add_tv_due_date).text.toString()),
+                        TimeConverter.convertStringToMillis(findViewById<MaterialTextView>(R.id.add_tv_start_time).text.toString()),
+                        TimeConverter.convertStringToMillis(findViewById<MaterialTextView>(R.id.add_tv_end_time).text.toString()),
                         false
                     )
                 )
@@ -60,17 +61,25 @@ class AddTaskActivity : AppCompatActivity(), DatePickerFragment.DialogDateListen
         }
     }
 
-    fun showDatePicker(view: View) {
-        val dialogFragment = DatePickerFragment()
-        dialogFragment.show(supportFragmentManager, "datePicker")
+    fun showTimePicker1(view: View) {
+        val dialogFragment = TimePickerFragment()
+        dialogFragment.show(supportFragmentManager, "start")
     }
 
-    override fun onDialogDateSet(tag: String?, year: Int, month: Int, dayOfMonth: Int) {
-        val calendar = Calendar.getInstance()
-        calendar.set(year, month, dayOfMonth)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        findViewById<TextView>(R.id.add_tv_due_date).text = dateFormat.format(calendar.time)
+    fun showTimePicker2(view: View) {
+        val dialogFragment = TimePickerFragment()
+        dialogFragment.show(supportFragmentManager, "end")
+    }
 
-        dueDateMillis = calendar.timeInMillis
+    override fun onDialogTimeSet(tag: String?, hour: Int, minute: Int) {
+        val calendar = Calendar.getInstance()
+        val time = String.format("%02d:%02d", hour, minute)
+        if(tag.equals("start")){
+            findViewById<TextView>(R.id.add_tv_start_time).text = time
+        } else {
+            findViewById<TextView>(R.id.add_tv_end_time).text = time
+        }
+
+//        dueDateMillis = calendar.timeInMillis
     }
 }

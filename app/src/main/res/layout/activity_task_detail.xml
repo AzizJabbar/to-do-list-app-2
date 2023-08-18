@@ -41,10 +41,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="@string/due_date">
+        android:hint="@string/start_time">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/detail_ed_due_date"
+            android:id="@+id/detail_ed_start_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="@string/end_time">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/detail_ed_end_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false" />

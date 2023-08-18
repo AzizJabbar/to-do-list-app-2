@@ -15,7 +15,8 @@ import java.io.InputStreamReader
 import java.util.concurrent.Executors
 
 // 3 : Define room database class and prepopulate database using JSON
-@Database(entities = [Task::class], version = 1)
+@Database(entities = [Task::class], version = 2)
+
 abstract class TaskDatabase : RoomDatabase() {
 
     abstract fun taskDao(): TaskDao
@@ -42,6 +43,7 @@ abstract class TaskDatabase : RoomDatabase() {
                             }
                         }
                     })
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
@@ -59,7 +61,8 @@ abstract class TaskDatabase : RoomDatabase() {
                                 item.getInt("id"),
                                 item.getString("title"),
                                 item.getString("description"),
-                                item.getLong("dueDate"),
+                                item.getLong("startTime"),
+                                item.getLong("endTime"),
                                 item.getBoolean("completed")
                             )
                         )

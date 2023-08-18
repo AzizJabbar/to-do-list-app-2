@@ -15,8 +15,11 @@ interface TaskDao {
     @Query("SELECT * FROM Task WHERE id=:taskId")
     fun getTaskById(taskId: Int): LiveData<Task>
 
-    @Query("SELECT * FROM Task WHERE completed = 0 ORDER BY dueDate ASC LIMIT 1")
-    fun getNearestActiveTask(): Task
+    @Query("SELECT * FROM Task WHERE completed = 0 ORDER BY startTime ASC LIMIT 1")
+    fun getNearestStartTask(): Task
+
+    @Query("SELECT * FROM Task WHERE completed = 0 ORDER BY endTime ASC LIMIT 1")
+    fun getNearestEndTask(): Task
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTask(task: Task): Long

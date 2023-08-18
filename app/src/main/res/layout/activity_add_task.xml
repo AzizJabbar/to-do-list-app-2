@@ -42,18 +42,31 @@
         android:orientation="horizontal">
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.ImageButton"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/due_date"
-            android:onClick="showDatePicker"
-            android:src="@drawable/ic_date" />
-
-        <TextView
-            android:id="@+id/add_tv_due_date"
+            android:id="@+id/start_time_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/due_date" />
+            android:onClick="showTimePicker1"
+            android:src="@drawable/ic_time" />
+
+        <TextView
+            android:id="@+id/add_tv_start_time"
+            android:layout_marginEnd="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/start_time" />
+
+        <ImageButton
+            android:id="@+id/end_time_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="showTimePicker2"
+            android:src="@drawable/ic_time" />
+
+        <TextView
+            android:id="@+id/add_tv_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/end_time" />
     </LinearLayout>
 
 

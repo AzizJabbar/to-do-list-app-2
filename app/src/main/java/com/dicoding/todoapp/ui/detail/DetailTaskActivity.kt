@@ -7,12 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.todoapp.R
 import com.dicoding.todoapp.ui.ViewModelFactory
-import com.dicoding.todoapp.ui.add.AddTaskViewModel
 import com.dicoding.todoapp.ui.list.TaskActivity
-import com.dicoding.todoapp.utils.DateConverter
+import com.dicoding.todoapp.utils.TimeConverter
 import com.dicoding.todoapp.utils.TASK_ID
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textview.MaterialTextView
 
 class DetailTaskActivity : AppCompatActivity() {
     private lateinit var detailTaskViewModel: DetailTaskViewModel
@@ -30,7 +28,8 @@ class DetailTaskActivity : AppCompatActivity() {
         detailTaskViewModel.task.observe(this){
             findViewById<TextInputEditText>(R.id.detail_ed_title).setText(it.title)
             findViewById<TextInputEditText>(R.id.detail_ed_description).setText(it.description)
-            findViewById<TextInputEditText>(R.id.detail_ed_due_date).setText(DateConverter.convertMillisToString(it.dueDateMillis))
+            findViewById<TextInputEditText>(R.id.detail_ed_start_time).setText(TimeConverter.convertMillisToString(it.startTimeMillis))
+            findViewById<TextInputEditText>(R.id.detail_ed_end_time).setText(TimeConverter.convertMillisToString(it.endTimeMillis))
         }
 
         findViewById<Button>(R.id.btn_delete_task).setOnClickListener {
